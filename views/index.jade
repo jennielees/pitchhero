@@ -1,0 +1,15 @@
+!!! 5
+html(lang="en")
+  head
+    title= pageTitle
+    link(rel='stylesheet', href='/style.css')
+    script(src="/javascript/socket.io.js", type="application/javascript")
+    :javascript
+      | var socket = new io.Socket('localhost');
+      | socket.connect();
+      | socket.on('connect', function(){ 
+      |   socket.send('hi!'); 
+      | })
+  body
+    h1 Jade - node template engine    
+    p You are amazing

@@ -1,0 +1,24 @@
+body {
+	background-image: url('/images/audience1.jpg');
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+}
+
+
+#timeremaining {
+	font-size: 200pt;
+	color: white;
+	display: inline;
+}
+
+#timeremaining:hover { cursor: pointer;}
+
+#logo { display:inline; }
+#avatar {display: inline;}
+
+.lowtime { color: red; }
+
+#slow {margin-left:10px;}
+#great {margin-left:10px;}
+
+#fast,#slow,#great { display: inline; font-size: 10pt;}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			<%= pageTitle %>
+		</title>
+		<link rel="stylesheet" href="/style.css" type="text/css">
+		<!--<link rel="stylesheet" href="/ext-touch.css" type="text/css">-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script src="/javascript/socket.io.js" type="application/javascript"></script>
+		<script type="text/javascript">
+//		var socket = new io.Socket('heckle.bigtoplabs.com');
+		var socket = new io.Socket('localhost');
+		
+		socket.connect();
+		socket.on('connect', function(){ 
+			// Send a null as initial ping to establish client count.
+			socket.send('0' + " " + Date.now() ); 
+		});
+		var lastmessage = '';
+  		var presentationid = 0;
+		socket.on('message', function(message){
+			message = $.parseJSON(message);
+			if ('presentationid' in message) {
+				presentationid = message.presentationid;
+				// reset presentation id, do nothing
+			}
+			if (message.ack) {
+				$('#message').text(message.ack);
+			}
+		});
+		
+		$(document).ready(function() {
+
+		   $('#messagebox').hide();
+			
+			$('li').click(function() {
+				socket.send($(this).attr('id') + " " + Date.now() );
+				// Pop up a 10 second no-revote box
+				$('#messagebox').fadeIn('slow'); // for 10s 
+				var sec = 9;
+				var timer = setInterval(function() {
+					$('#timer').text(sec--);
+					if (sec == 0) {
+						$('#messagebox').fadeOut('slow');
+						sec = 9;
+						clearInterval(timer);
+					}
+					
+				}, 1000);
+				
+			});
+		});
+		
+		</script>
+		<!--<script type="text/javascript" src="/javascript/ext-touch-debug.js"></script>
+		<script type="text/javascript" src="/javascript/index.js"></script> -->
+	</head>
+	<body>
+		<div id="distance"></div> 
+		<div id="outer">
+			<p>
+				<ul>
+				<% for(var i=0; i<answers.length; i++) {%>
+					<li class="option_<%= i %>" id="<%= answerids[i] %>"><%= answers[i] %></li>
+				<% } %>
+		<!--		<li id="slow">too slow</li>
+				
+				<li id="fast">too fast</li>
+			
+				<li id="OK">just right</li>
+				-->
+				</ul>
+
+			<div id="messagebox">
+				<div id="header">thanks!</div>
+				<div id="vote">you voted 
+				<div id="message"></div></div>
+				<small>vote again in <div id="timer">10</div>...</small>
+			</div>
+			</p>
+		</div>
+	</body>
+</html>

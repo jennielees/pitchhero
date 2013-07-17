@@ -1,0 +1,101 @@
+create database pitchhero;
+use pitchhero;
+
+CREATE TABLE presentations (
+presentation_id INTEGER NOT NULL,
+description TEXT,
+scheduled_end TIMESTAMP DEFAULT '2020-01-01 00:00:00',
+PRIMARY KEY (presentation_id),
+INDEX `ends` (scheduled_end DESC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+CREATE TABLE questions (
+question_id INTEGER NOT NULL,
+description TEXT,
+PRIMARY KEY (question_id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+CREATE TABLE answers (
+answer_id INTEGER NOT NULL,
+description TEXT,
+PRIMARY KEY (answer_id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+CREATE TABLE presques (
+id INTEGER NOT NULL AUTO_INCREMENT,
+presentation_id INTEGER NOT NULL,
+question_id INTEGER NOT NULL,
+PRIMARY KEY (id),
+INDEX `pres` (presentation_id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+CREATE TABLE quesans (
+id INTEGER NOT NULL AUTO_INCREMENT,
+question_id INTEGER NOT NULL,
+answer_id INTEGER NOT NULL,
+PRIMARY KEY (id),
+INDEX `ques` (question_id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+CREATE TABLE stats (
+presentation_id INTEGER NOT NULL,
+question_id INTEGER NOT NULL,
+answer_id INTEGER NOT NULL,
+timestamp TIMESTAMP NOT NULL,
+user_id INTEGER NOT NULL,
+time_remaining INTEGER DEFAULT '0',
+PRIMARY KEY (presentation_id, question_id, answer_id, timestamp, user_id),
+INDEX `byprestime` (presentation_id, timestamp),
+INDEX `bytime` (timestamp))
+ENGINE = InnoDB;
+
+INSERT INTO presentations VALUES
+(1,'first presentation','2010-09-25 20:01:00'),
+(2,'second presentation','2010-09-25 20:02:05');
+
+INSERT INTO questions VALUES
+(1,'speed');
+
+INSERT INTO presques VALUES
+(0,1,1),
+(0,1,2),
+(0,2,1),
+(0,2,2);
+
+INSERT INTO answers VALUES
+(1,'too slow'),
+(2,'too fast');
+
+INSERT INTO quesans VALUES
+(0,1,1),
+(0,1,2);
+
+INSERT INTO stats VALUES
+(1,1,1,'2010-09-25 20:00:05',1001,55),
+(1,1,2,'2010-09-25 20:00:08',1002,52),
+(1,1,1,'2010-09-25 20:00:08',1003,52),
+(1,1,1,'2010-09-25 20:00:11',1004,49),
+(1,1,2,'2010-09-25 20:00:34',1005,26),
+(1,1,1,'2010-09-25 20:00:36',1002,24),
+(1,1,2,'2010-09-25 20:00:56',1003,4),
+(2,1,2,'2010-09-25 20:01:46',1003,19),
+(2,1,2,'2010-09-25 20:01:47',1004,18),
+(2,1,1,'2010-09-25 20:01:47',1005,18),
+(2,1,2,'2010-09-25 20:01:53',1003,12);
+
+analyze table presentations;
+analyze table questions;
+analyze table presques;
+analyze table answers;
+analyze table quesans;
+analyze table stats;

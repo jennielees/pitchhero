@@ -1,0 +1,41 @@
+use pitchhero;
+INSERT INTO presentations VALUES
+(1,'first presentation','2010-09-25 20:01:00'),
+(2,'second presentation','2010-09-25 20:02:05');
+
+INSERT INTO questions VALUES
+(1,'speed');
+
+INSERT INTO presques VALUES
+(0,1,1),
+(0,1,2),
+(0,2,1),
+(0,2,2);
+
+INSERT INTO answers VALUES
+(1,'too slow'),
+(2,'too fast');
+
+INSERT INTO quesans VALUES
+(0,1,1),
+(0,1,2);
+
+INSERT INTO stats VALUES
+(1,1,1,'2010-09-25 20:00:05',1001,55),
+(1,1,2,'2010-09-25 20:00:08',1002,52),
+(1,1,1,'2010-09-25 20:00:08',1003,52),
+(1,1,1,'2010-09-25 20:00:11',1004,49),
+(1,1,2,'2010-09-25 20:00:34',1005,26),
+(1,1,1,'2010-09-25 20:00:36',1002,24),
+(1,1,2,'2010-09-25 20:00:56',1003,4),
+(2,1,2,'2010-09-25 20:01:46',1003,19),
+(2,1,2,'2010-09-25 20:01:47',1004,18),
+(2,1,1,'2010-09-25 20:01:47',1005,18),
+(2,1,2,'2010-09-25 20:01:53',1003,12);
+
+analyze table presentations;
+analyze table questions;
+analyze table presques;
+analyze table answers;
+analyze table quesans;
+analyze table stats;
